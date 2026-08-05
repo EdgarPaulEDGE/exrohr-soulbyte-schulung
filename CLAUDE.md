@@ -7,11 +7,22 @@ SoulByte-Erstschulung von 12 Ex-Rohr-Nutzern. Aufbau nach Emres Leitfaden
 **Die Praesi wird als Website gezeigt, nicht als PDF.** Optimiert wird auf den
 Live-Eindruck im Browser. PDF-Export existiert nur als Notnagel.
 
+## Live
+
+**https://edgarpauledge.github.io/exrohr-soulbyte-schulung/**
+GitHub Pages aus `main`, Repo `EdgarPaulEDGE/exrohr-soulbyte-schulung`, oeffentlich.
+Jeder Push auf `main` geht automatisch live (etwa eine Minute).
+
 ## Starten
 
 ```bash
 npm run serve        # http://localhost:8080
+npm run build        # prueft, ob alle verlinkten Dateien existieren
 ```
+
+`npm run build` ist kein Kompilat, sondern eine Bauprüfung (`pruefe.mjs`):
+sie liest index.html, sammelt alle lokalen Verweise und meldet fehlende
+Dateien. Der globale Commit-Hook ruft dieses Skript, deshalb muss es da sein.
 
 `?nofrag` in der URL zeigt alle Einblend-Fragmente sofort (fuer Pruefung).
 
