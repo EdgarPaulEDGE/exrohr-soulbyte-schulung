@@ -239,29 +239,18 @@ body.chrome-aus .chrome { opacity: 0; }
 }
 .team-name { font-size: 34px; font-weight: 700; }
 
-/* ---------- Bildbaender ----------
-   Zwei Reihen, die langsam gegeneinander laufen. Der Vorteil gegenueber
-   einem Raster: die Bilder behalten ihre Groesse, egal wie viele es sind.
-   Kommen welche dazu, dauert der Durchlauf laenger, sonst aendert sich nichts.
-   Fuer die Endlosschleife steht jede Reihe zweimal im HTML und wird um die
-   Haelfte verschoben: am Ende der ersten Haelfte sieht das Bild genauso aus
-   wie am Anfang, der Sprung ist unsichtbar. */
-.baender { display: flex; flex-direction: column; gap: 18px; width: 100%; overflow: hidden;
-  /* An den Seiten ausblenden, damit die Bilder nicht hart abgeschnitten wirken */
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+/* ---------- Collage ----------
+   Drei mal drei Kacheln im Seitenverhaeltnis 3:2. Das ist genau das Format,
+   in dem die meisten Fotos aufgenommen sind, deshalb muss kaum beschnitten
+   werden. Enge Fugen und gleiche Rundung lassen die neun Bilder als eine
+   Flaeche lesen statt als Tabelle. */
+.collage {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  width: 100%; align-content: center;
 }
-.band { display: flex; gap: 18px; width: max-content; }
-.band img {
-  height: 190px; width: auto; display: block; border-radius: 14px;
-  border: 1px solid var(--hairline); object-fit: cover;
-}
-.band.links  { animation: band-links  64s linear infinite; }
-.band.rechts { animation: band-rechts 58s linear infinite; }
-@keyframes band-links  { from { transform: translateX(0); }      to { transform: translateX(calc(-50% - 9px)); } }
-@keyframes band-rechts { from { transform: translateX(calc(-50% - 9px)); } to { transform: translateX(0); } }
-@media (prefers-reduced-motion: reduce) {
-  .band.links, .band.rechts { animation: none; }
+.collage img {
+  width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block;
+  border-radius: 12px; border: 1px solid var(--hairline);
 }
 
 /* ---------- Metriken (offen, ohne Boxen) ---------- */
@@ -391,29 +380,41 @@ body.chrome-aus .chrome { opacity: 0; }
 <section>
   <div class="slide">
     <h2 class="headline">Ihr kennt uns. Hier ist, was <span class="schimmer">neu</span> ist.</h2>
-
-    <div class="spalten feld" style="grid-template-columns:repeat(3,1fr);padding:34px 52px;margin-top:14px;">
-        <div class="fragment fade-up">
-          <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C15DE6" stroke-width="1.8"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg></div>
-          <h3 style="font-size:34px;">Wir ziehen in die Altstadt</h3>
-          <p style="font-size:25px;">Zum 01.10. geht es in die Marlesgrube.</p>
+    <div class="reihe wachsen" style="margin-top:26px;gap:64px;align-items:center;">
+      <div class="zeilen feld" style="flex:0 0 640px;">
+        <div class="fragment fade-up" style="display:flex;gap:28px;align-items:flex-start;padding:40px 6px;">
+          <svg style="width:46px;height:46px;flex-shrink:0;margin-top:4px;" viewBox="0 0 24 24" fill="none" stroke="#C15DE6" stroke-width="1.8"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>
+          <div>
+            <h3 style="font-size:36px;margin-bottom:8px;">Wir ziehen in die Altstadt</h3>
+            <p style="font-size:26px;color:var(--w-70);margin:0;">Zum 01.10. geht es in die Marlesgrube.</p>
+          </div>
         </div>
-        <div class="fragment fade-up">
-          <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#009FF4" stroke-width="1.8"><path d="M17 11a5 5 0 1 0-10 0"/><circle cx="12" cy="6" r="3"/><path d="M2 21c1.5-4 5.5-6 10-6s8.5 2 10 6"/></svg></div>
-          <h3 style="font-size:34px;">Starke Partner an Bord</h3>
-          <p style="font-size:25px;">Staatskanzlei, Sparkasse zu L&uuml;beck und mehr.</p>
+        <div class="fragment fade-up" style="display:flex;gap:28px;align-items:flex-start;padding:40px 6px;">
+          <svg style="width:46px;height:46px;flex-shrink:0;margin-top:4px;" viewBox="0 0 24 24" fill="none" stroke="#009FF4" stroke-width="1.8"><path d="M17 11a5 5 0 1 0-10 0"/><circle cx="12" cy="6" r="3"/><path d="M2 21c1.5-4 5.5-6 10-6s8.5 2 10 6"/></svg>
+          <div>
+            <h3 style="font-size:36px;margin-bottom:8px;">Starke Partner an Bord</h3>
+            <p style="font-size:26px;color:var(--w-70);margin:0;">Staatskanzlei, Sparkasse zu L&uuml;beck und mehr.</p>
+          </div>
         </div>
-        <div class="fragment fade-up">
-          <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.8"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg></div>
-          <h3 style="font-size:34px;">Unsere erste Software</h3>
-          <p style="font-size:25px;">SoulByte. Ihr seid die Ersten damit.</p>
+        <div class="fragment fade-up" style="display:flex;gap:28px;align-items:flex-start;padding:40px 6px;">
+          <svg style="width:46px;height:46px;flex-shrink:0;margin-top:4px;" viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.8"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+          <div>
+            <h3 style="font-size:36px;margin-bottom:8px;">Unsere erste Software</h3>
+            <p style="font-size:26px;color:var(--w-70);margin:0;">SoulByte. Ihr seid die Ersten damit.</p>
+          </div>
         </div>
-    </div>
-
-    <!-- Alle Bilder aus dem Collage-Ordner, aufgeteilt auf zwei Baender -->
-    <div class="baender wachsen" style="justify-content:center;margin-top:32px;">
-        <div class="band links"><img src="assets/images/collage/01.jpg" alt=""><img src="assets/images/collage/03.jpg" alt=""><img src="assets/images/collage/05.jpg" alt=""><img src="assets/images/collage/07.jpg" alt=""><img src="assets/images/collage/09.jpg" alt=""><img src="assets/images/collage/01.jpg" alt=""><img src="assets/images/collage/03.jpg" alt=""><img src="assets/images/collage/05.jpg" alt=""><img src="assets/images/collage/07.jpg" alt=""><img src="assets/images/collage/09.jpg" alt=""><img src="assets/images/collage/01.jpg" alt=""><img src="assets/images/collage/03.jpg" alt=""><img src="assets/images/collage/05.jpg" alt=""><img src="assets/images/collage/07.jpg" alt=""><img src="assets/images/collage/09.jpg" alt=""><img src="assets/images/collage/01.jpg" alt=""><img src="assets/images/collage/03.jpg" alt=""><img src="assets/images/collage/05.jpg" alt=""><img src="assets/images/collage/07.jpg" alt=""><img src="assets/images/collage/09.jpg" alt=""></div>
-        <div class="band rechts"><img src="assets/images/collage/02.jpg" alt=""><img src="assets/images/collage/04.jpg" alt=""><img src="assets/images/collage/06.jpg" alt=""><img src="assets/images/collage/08.jpg" alt=""><img src="assets/images/collage/02.jpg" alt=""><img src="assets/images/collage/04.jpg" alt=""><img src="assets/images/collage/06.jpg" alt=""><img src="assets/images/collage/08.jpg" alt=""><img src="assets/images/collage/02.jpg" alt=""><img src="assets/images/collage/04.jpg" alt=""><img src="assets/images/collage/06.jpg" alt=""><img src="assets/images/collage/08.jpg" alt=""><img src="assets/images/collage/02.jpg" alt=""><img src="assets/images/collage/04.jpg" alt=""><img src="assets/images/collage/06.jpg" alt=""><img src="assets/images/collage/08.jpg" alt=""></div>
+      </div>
+      <div class="collage">
+        <img src="assets/images/collage/01.jpg" alt="">
+        <img src="assets/images/collage/02.jpg" alt="">
+        <img src="assets/images/collage/03.jpg" alt="">
+        <img src="assets/images/collage/04.jpg" alt="">
+        <img src="assets/images/collage/07.jpg" alt="">
+        <img src="assets/images/collage/05.jpg" alt="">
+        <img src="assets/images/collage/08.jpg" alt="">
+        <img src="assets/images/collage/06.jpg" alt="">
+        <img src="assets/images/collage/09.jpg" alt="">
+      </div>
     </div>
   </div>
 </section>
