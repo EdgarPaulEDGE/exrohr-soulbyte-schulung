@@ -1,0 +1,8 @@
+# Verworfener 3D-Versuch: 5,7 MB GLB, gehoert nicht ins Deployment
+3d-experiment/
+node_modules/
+# Entscheidungshilfen, nicht Teil der Praesentation
+headline-varianten.html
+tempo-varianten.html
+# Lokale Werkzeugeinstellungen
+.claude/

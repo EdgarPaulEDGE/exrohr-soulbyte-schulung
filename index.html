@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SoulByte Schulung | Ex-Rohr x EDGE Digital</title>
+<meta name="theme-color" content="#030309">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="assets/revealjs/reveal.css">
+<style>
+/* ============================================================================
+   SOULBYTE SCHULUNG EX-ROHR | 07.08.2026
+   Design V2 nach Edgars Feedback: altes EDGE-Logo (Sparkasse-Stand), kein
+   Monospace, keine Glas-Boxen. Typografie traegt die Flaeche, Struktur kommt
+   aus feinen Hairline-Trennern (Agenda-Prinzip). Raum-Look bleibt.
+   Kein box-shadow (decktape-PDF-Bug).
+   ========================================================================== */
+
+@font-face { font-family: "Avenir Next LT"; src: url("assets/fonts/AvenirNext-Regular.ttf") format("truetype"); font-weight: 400; }
+@font-face { font-family: "Avenir Next LT"; src: url("assets/fonts/AvenirNext-Medium.ttf") format("truetype"); font-weight: 500; }
+@font-face { font-family: "Avenir Next LT"; src: url("assets/fonts/AvenirNext-DemiBold.ttf") format("truetype"); font-weight: 600; }
+@font-face { font-family: "Avenir Next LT"; src: url("assets/fonts/AvenirNext-Bold.ttf") format("truetype"); font-weight: 700; }
+
+:root {
+  --raum: #030309;
+  --weiss: #F4F6FF;
+  --w-70: rgba(244, 246, 255, 0.70);
+  --w-45: rgba(244, 246, 255, 0.45);
+  --w-25: rgba(244, 246, 255, 0.25);
+  --hairline: rgba(244, 246, 255, 0.14);
+  --hairline-stark: rgba(244, 246, 255, 0.28);
+  --purple: #C15DE6;
+  --blau: #009FF4;
+  --cyan: #00E2E2;
+  --exrot: #ff6b5e;
+  --ok: #3ad29f;
+  --font: "Avenir Next LT", "Avenir Next", Avenir, "Nunito Sans", "Segoe UI", sans-serif;
+}
+
+html, body { background: var(--raum); font-family: var(--font); }
+/* reveal.css legt einen weissen Viewport ueber die fixe Raum-Ebene: abschalten */
+.reveal-viewport { background: transparent !important; }
+
+/* ---------- Raum-Ebenen: liegen fix HINTER allen Slides ---------- */
+#kosmos { position: fixed; inset: 0; z-index: 0; width: 100%; height: 100%; }
+.nebel {
+  position: fixed; inset: -20%; z-index: 0; pointer-events: none; filter: blur(60px);
+  background:
+    radial-gradient(38% 30% at 78% 24%, rgba(0, 159, 244, 0.10), transparent 70%),
+    radial-gradient(34% 28% at 16% 80%, rgba(193, 93, 230, 0.11), transparent 70%),
+    radial-gradient(24% 20% at 62% 86%, rgba(0, 226, 226, 0.07), transparent 70%);
+  animation: nebel-atmen 46s ease-in-out infinite alternate;
+}
+/* Der Nebel atmet ganz langsam: kaum bewusst wahrnehmbar, aber der Raum lebt */
+@keyframes nebel-atmen {
+  from { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+  to   { transform: translate3d(2.5%, -1.8%, 0) scale(1.06); opacity: .82; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nebel { animation: none; }
+}
+.vignette {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(140% 120% at 50% 42%, transparent 50%, rgba(1, 1, 4, 0.88) 100%);
+}
+/* Sternschnuppen (1:1 aus dem EdgeVision-Wizard): alle paar Sekunden ein
+   Lichtstreif, auf der Raum-Ebene hinter den Folien */
+.schnuppe {
+  position: fixed; z-index: 0; width: 150px; height: 1.5px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(220, 235, 255, 0.9), transparent);
+  filter: drop-shadow(0 0 6px rgba(160, 220, 255, 0.8));
+  animation: schnuppen-flug 1.1s ease-out forwards;
+}
+@keyframes schnuppen-flug {
+  from { opacity: 0; transform: rotate(var(--wk)) translateX(0); }
+  12%  { opacity: 1; }
+  to   { opacity: 0; transform: rotate(var(--wk)) translateX(46vw); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .schnuppe { animation: none; display: none; }
+}
+
+/* ---------- Reveal-Grundgeruest ---------- */
+.reveal { font-family: var(--font); font-size: 30px; color: var(--weiss); }
+.reveal .slides { text-align: left; }
+.reveal .slides > section { padding: 0; height: 1080px; }
+.reveal .progress { color: var(--cyan); height: 4px; }
+.reveal .controls { color: var(--w-45); }
+.reveal ::selection { background: rgba(0, 226, 226, 0.28); }
+
+.slide {
+  width: 1920px; height: 1080px;
+  display: flex !important; flex-direction: column;
+  /* oben bewusst viel Luft zwischen Logo-Zeile und Titel */
+  padding: 150px 130px 105px;
+  box-sizing: border-box;
+}
+.slide.mittig { justify-content: center; align-items: center; text-align: center; }
+
+/* ---------- Typografie ---------- */
+h1, h2, h3, h4 { margin: 0; font-family: var(--font); }
+.hero {
+  font-size: 148px; line-height: 1.0; letter-spacing: -.025em; font-weight: 700;
+  text-transform: uppercase; text-wrap: balance; margin: 0 0 28px;
+}
+.headline {
+  font-size: 84px; line-height: 1.03; letter-spacing: -.02em; font-weight: 700;
+  text-transform: uppercase; text-wrap: balance; margin: 0 0 22px; flex-shrink: 0;
+}
+/* Akzent im Farbverlauf: das Schluesselwort schimmert, der Rest bleibt weiss */
+.schimmer {
+  background: linear-gradient(96deg, var(--purple), var(--blau) 52%, var(--cyan));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.lead { color: var(--w-70); font-size: 36px; line-height: 1.5; max-width: 30em; text-wrap: balance; margin: 0; }
+.slide.mittig .lead { margin-left: auto; margin-right: auto; }
+.label {
+  font-weight: 600; font-size: 20px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--w-45);
+}
+
+/* ---------- Feld: dunkles Glas mit Space-Schimmer (EDGE-Tools-Karte) ----------
+   Liegt hinter jedem Inhaltsblock, damit der Text vor der Galaxie ruhig steht. */
+.feld {
+  border: 1px solid var(--hairline);
+  border-radius: 28px;
+  background: rgba(8, 11, 22, 0.62);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  padding: 44px 52px;
+  position: relative; overflow: hidden;
+}
+.feld::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(90% 70% at 10% 0%, rgba(0, 226, 226, 0.07), transparent 60%),
+    radial-gradient(80% 60% at 95% 100%, rgba(0, 159, 244, 0.05), transparent 60%);
+}
+/* Im Feld braucht die erste und letzte Zeile keine eigene Kante mehr */
+.feld.zeilen > div:first-child, .feld .agenda-zeile:first-child { border-top: none; }
+.feld.zeilen > div:last-child, .feld .agenda-zeile:last-child { border-bottom: none; }
+
+/* ---------- Offene Spalten mit Hairline-Trennern ---------- */
+.spalten { display: grid; width: 100%; }
+.spalten > div { padding: 0 56px; }
+.spalten > div:first-child { padding-left: 0; }
+.spalten > div:last-child { padding-right: 0; }
+.spalten > div + div { border-left: 1px solid var(--hairline); }
+.spalten .sp-icon { margin-bottom: 26px; }
+.spalten .sp-icon svg { width: 46px; height: 46px; }
+.spalten h3 { font-size: 37px; font-weight: 700; letter-spacing: -.015em; margin: 0 0 16px; }
+.spalten p { color: var(--w-70); font-size: 27px; line-height: 1.55; margin: 0; }
+.sp-num { font-size: 46px; font-weight: 700; color: var(--cyan); margin-bottom: 18px; line-height: 1; }
+
+/* ---------- Zeilen-Listen (Agenda-Prinzip) ---------- */
+.zeilen { display: flex; flex-direction: column; width: 100%; }
+.zeilen > div { padding: 26px 6px; border-bottom: 1px solid var(--hairline); }
+.zeilen > div:first-child { border-top: 1px solid var(--hairline); }
+
+/* ---------- Takeaway: Statement statt Box ---------- */
+.takeaway { text-align: center; padding-top: 6px; }
+.takeaway::before {
+  content: ""; display: block; width: 90px; height: 3px; margin: 0 auto 26px;
+  background: linear-gradient(90deg, var(--purple), var(--blau) 52%, var(--cyan));
+  border-radius: 2px;
+}
+.takeaway p { font-size: 40px; font-weight: 600; line-height: 1.35; margin: 0; text-wrap: balance; }
+
+/* ---------- Platzhalter (Bilder folgen) ---------- */
+.ph {
+  border: 2px dashed var(--hairline-stark); border-radius: 26px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px; color: var(--w-25); background: rgba(244, 246, 255, 0.02);
+}
+.ph .label { color: var(--w-25); font-size: 16px; letter-spacing: .2em; }
+.ph svg { width: 44px; height: 44px; opacity: .5; }
+
+/* ---------- Chrome (fixe Overlays) ---------- */
+.chrome { position: fixed; z-index: 20; pointer-events: none; transition: opacity .3s; }
+.chrome-edge { top: 34px; left: 56px; }
+.chrome-edge img { height: 52px; display: block; }
+.chrome-client { top: 38px; right: 56px; }
+.chrome-client img { height: 46px; display: block; opacity: .92; }
+.chrome-num {
+  bottom: 36px; left: 60px;
+  font-weight: 500; font-size: 16px; letter-spacing: .12em; color: var(--w-25);
+}
+body.chrome-aus .chrome { opacity: 0; }
+
+/* ---------- Divider-Slides ---------- */
+.riesenzahl {
+  position: absolute; top: 50%; right: 120px; transform: translateY(-50%);
+  font-size: 640px; font-weight: 700; line-height: 1; pointer-events: none;
+  color: transparent; -webkit-text-stroke: 2px rgba(244, 246, 255, 0.10);
+}
+.divider-zeit {
+  font-weight: 500; font-size: 24px; letter-spacing: .18em; color: var(--w-45);
+  margin-top: 34px; text-transform: uppercase;
+}
+
+/* ---------- Agenda ---------- */
+.agenda { display: flex; flex-direction: column; width: 100%; margin-top: 10px; }
+.agenda-zeile {
+  display: grid; grid-template-columns: 230px 110px 1fr; align-items: center; gap: 36px;
+  padding: 16px 10px; border-bottom: 1px solid var(--hairline);
+}
+.agenda-zeile:first-child { border-top: 1px solid var(--hairline); }
+.agenda-zeit { font-weight: 500; font-size: 30px; color: var(--w-45); font-variant-numeric: tabular-nums; }
+.agenda-num { font-size: 34px; font-weight: 700; color: var(--cyan); }
+.agenda-titel { font-size: 38px; font-weight: 600; letter-spacing: -.01em; }
+.agenda-titel small { display: block; font-size: 24px; font-weight: 400; color: var(--w-45); margin-top: 4px; }
+.agenda-zeile.pause-zeile .agenda-titel { color: var(--w-45); font-weight: 400; }
+
+/* ---------- Team ---------- */
+.team-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 40px; width: 100%; margin-top: 26px; }
+.team-karte { display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+/* Freigestelltes Portrait auf einer Scheibe aus Glas plus Markenlicht:
+   so sitzen EDGE- und Ex-Rohr-Leute trotz verschiedener Ursprungsfotos
+   in derselben Bildwelt. */
+.team-foto {
+  width: 230px; height: 230px; border-radius: 50%;
+  border: 1px solid var(--hairline-stark);
+  background:
+    radial-gradient(75% 70% at 50% 12%, rgba(0, 226, 226, .10), transparent 62%),
+    radial-gradient(80% 80% at 50% 100%, rgba(0, 159, 244, .10), transparent 60%),
+    rgba(12, 16, 30, .78);
+  position: relative; overflow: hidden;
+}
+.team-foto img {
+  position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: 104%; height: auto; display: block;
+}
+.team-name { font-size: 34px; font-weight: 700; }
+.team-firma { font-weight: 600; font-size: 16px; letter-spacing: .18em; text-transform: uppercase; margin-top: 10px; }
+.team-firma.edge { color: var(--cyan); }
+.team-firma.exrohr { color: var(--exrot); }
+
+/* ---------- Collage-Platzhalter ---------- */
+.collage { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 250px; gap: 22px; width: 100%; margin-top: 8px; }
+.collage .ph.gross { grid-column: span 2; grid-row: span 2; }
+
+/* ---------- Metriken (offen, ohne Boxen) ---------- */
+.metrik { text-align: center; }
+.metrik .zahl {
+  display: block; font-size: 150px; font-weight: 700; letter-spacing: -.03em; line-height: 1;
+  background: linear-gradient(96deg, var(--purple), var(--blau) 52%, var(--cyan));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  margin-bottom: 26px;
+}
+.metrik .was { font-size: 28px; color: var(--w-70); line-height: 1.45; text-wrap: balance; }
+.metrik .quelle { display: block; font-weight: 600; font-size: 17px; letter-spacing: .14em; text-transform: uppercase; color: var(--w-25); margin-top: 20px; }
+
+/* ---------- Vergleichstabelle ---------- */
+.vergleich { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 4px; }
+.vergleich th, .vergleich td { padding: 25px 34px; text-align: center; border-bottom: 1px solid var(--hairline); }
+.vergleich th { font-weight: 600; font-size: 21px; letter-spacing: .14em; text-transform: uppercase; color: var(--w-45); border-bottom: 1px solid var(--hairline-stark); }
+.vergleich td:first-child, .vergleich th:first-child { text-align: left; padding-left: 10px; }
+.vergleich td:first-child { font-size: 30px; font-weight: 600; color: var(--weiss); }
+.vergleich td { font-size: 27px; color: var(--w-70); }
+.vergleich .sb-spalte { background: rgba(0, 226, 226, 0.055); }
+.vergleich th.sb-spalte {
+  font-size: 23px; color: var(--cyan); border-top: 1px solid rgba(0, 226, 226, .4);
+}
+.vergleich tr:first-child th.sb-spalte { border-radius: 18px 18px 0 0; }
+.vergleich tr:last-child td.sb-spalte { border-radius: 0 0 18px 18px; }
+.check, .kreuz { display: inline-grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; }
+.check { background: rgba(58, 210, 159, .12); color: var(--ok); }
+.kreuz { background: rgba(244, 246, 255, .05); color: var(--w-25); }
+.check svg, .kreuz svg { width: 24px; height: 24px; }
+
+/* ---------- Grosse Link-Anzeige (Typo statt Pill) ---------- */
+.link-gross { font-size: 88px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
+
+/* ---------- Tempo-Chart (Moore vs. Scaling) ---------- */
+.chart-wrap { position: relative; flex: 1; display: flex; align-items: center; }
+.gitterlinie { stroke: rgba(244, 246, 255, .09); stroke-width: 1; }
+.achsentext { fill: rgba(244, 246, 255, .32); font-size: 20px; font-family: var(--font); font-weight: 500; }
+.kurve-moore { stroke: rgba(244, 246, 255, .34); stroke-width: 5; fill: none; stroke-linecap: round; }
+.kurve-ki {
+  stroke: url(#ki-verlauf); stroke-width: 8; fill: none; stroke-linecap: round;
+  filter: drop-shadow(0 0 14px rgba(0, 226, 226, .45));
+}
+.endwert-ki { font-size: 74px; font-weight: 700; letter-spacing: -.02em; }
+.endwert-moore { font-size: 46px; font-weight: 700; fill: rgba(244, 246, 255, .5); font-family: var(--font); }
+.quelle { font-size: 19px; color: var(--w-25); letter-spacing: .04em; }
+
+/* ---------- Fragmente ---------- */
+.reveal .fragment.fade-up { transform: translateY(28px); }
+.reveal .fragment.fade-up.visible { transform: translateY(0); }
+
+/* ---------- Utility ---------- */
+.reihe { display: flex; gap: 34px; }
+.spalte { display: flex; flex-direction: column; gap: 34px; }
+.wachsen { flex: 1; min-height: 0; }
+.mt-auto { margin-top: auto; }
+.mt { margin-top: 44px; }
+.zentriert { text-align: center; }
+.cyan { color: var(--cyan); }
+.rot { color: var(--exrot); }
+</style>
+</head>
+<body>
+
+<canvas id="kosmos"></canvas>
+<div class="nebel"></div>
+<div class="vignette"></div>
+
+<!-- Chrome: auf jeder Slide, per JS auf Titel- und Divider-Slides ausgeblendet -->
+<div class="chrome chrome-edge"><img src="assets/logos/edge-logo-white.png" alt="EDGE Digital"></div>
+<div class="chrome chrome-client"><img src="assets/logos/ExRohr_Logo_weiss.png" alt="Ex-Rohr GmbH"></div>
+<div class="chrome chrome-num" id="chrome-num"></div>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ============ 1: TITEL ============ -->
+<section data-chrome="aus">
+  <div class="slide mittig">
+    <img src="assets/logos/edge-logo-white.png" alt="EDGE Digital" style="height:140px;margin-bottom:64px;">
+    <h1 class="hero" style="font-size:210px;line-height:1.06;"><span class="schimmer">SoulByte</span></h1>
+    <p class="lead" style="font-size:42px;margin-top:26px;">Eure neue KI. Ab heute im Einsatz.</p>
+    <p class="label" style="margin-top:70px;">Freitag, 07.08.2026 &middot; 10:00 bis 12:00 Uhr &middot; Online</p>
+  </div>
+</section>
+
+<!-- ============ 2: CHECK-IN / GEMEINSAMES EINRICHTEN ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Erst <span class="schimmer">reinkommen.</span> Dann loslegen.</h2>
+    <p class="lead">Wir richten SoulByte jetzt gemeinsam ein. Danach kann jeder von euch sofort loslegen.</p>
+    <div class="reihe wachsen" style="align-items:center;gap:80px;margin-top:20px;">
+      <div class="spalte wachsen" style="gap:48px;">
+        <!-- URL und QR gehoeren zusammen: eine Zeile, der Code steht neben dem,
+             was er verschluesselt -->
+        <div class="reihe" style="align-items:center;justify-content:space-between;gap:60px;">
+          <p class="link-gross">dev.<span class="schimmer">soulbyte</span>.com</p>
+          <div style="display:flex;align-items:center;gap:34px;flex-shrink:0;">
+            <span class="label" style="color:var(--cyan);letter-spacing:.22em;text-align:right;line-height:1.5;font-size:23px;">Direkt<br>scannen</span>
+            <img src="assets/images/qr-soulbyte.png" alt="QR-Code zu dev.soulbyte.com" style="width:300px;height:300px;">
+          </div>
+        </div>
+        <div class="spalten feld" style="grid-template-columns:repeat(3,1fr);padding:34px 52px;">
+          <div class="fragment fade-up">
+            <div class="sp-num">1</div>
+            <h3 style="font-size:31px;">Link &ouml;ffnen</h3>
+            <p style="font-size:23px;">Im Browser eurer Wahl. Handy geht auch.</p>
+          </div>
+          <div class="fragment fade-up">
+            <div class="sp-num">2</div>
+            <h3 style="font-size:31px;">Anmelden</h3>
+            <p style="font-size:23px;">Mit den Zugangsdaten aus eurer Mail.</p>
+          </div>
+          <div class="fragment fade-up">
+            <div class="sp-num">3</div>
+            <h3 style="font-size:31px;">Offen lassen</h3>
+            <p style="font-size:23px;">Nach der Pause arbeiten wir direkt im Tool.</p>
+          </div>
+        </div>
+        <p class="label">H&auml;ngt jemand fest? Hand heben, wir helfen sofort.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3: WER SIND WIR (EDGE ERRUNGENSCHAFTEN) ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Ihr kennt uns. Hier ist, was <span class="schimmer">neu</span> ist.</h2>
+    <div class="reihe wachsen" style="margin-top:30px;gap:70px;">
+      <div class="zeilen feld" style="flex:1.05;justify-content:center;">
+        <div class="fragment fade-up" style="display:flex;gap:32px;align-items:flex-start;padding:48px 6px;">
+          <svg style="width:50px;height:50px;flex-shrink:0;margin-top:5px;" viewBox="0 0 24 24" fill="none" stroke="#C15DE6" stroke-width="1.8"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>
+          <div>
+            <h3 style="font-size:40px;margin-bottom:10px;">Wir ziehen in die Altstadt</h3>
+            <p style="font-size:29px;color:var(--w-70);margin:0;">Zum 01.10. geht es in die Marlesgrube.</p>
+          </div>
+        </div>
+        <div class="fragment fade-up" style="display:flex;gap:32px;align-items:flex-start;padding:48px 6px;">
+          <svg style="width:50px;height:50px;flex-shrink:0;margin-top:5px;" viewBox="0 0 24 24" fill="none" stroke="#009FF4" stroke-width="1.8"><path d="M17 11a5 5 0 1 0-10 0"/><circle cx="12" cy="6" r="3"/><path d="M2 21c1.5-4 5.5-6 10-6s8.5 2 10 6"/></svg>
+          <div>
+            <h3 style="font-size:40px;margin-bottom:10px;">Starke Partner an Bord</h3>
+            <p style="font-size:29px;color:var(--w-70);margin:0;">Staatskanzlei, Sparkasse zu L&uuml;beck und mehr.</p>
+          </div>
+        </div>
+        <div class="fragment fade-up" style="display:flex;gap:32px;align-items:flex-start;padding:48px 6px;">
+          <svg style="width:50px;height:50px;flex-shrink:0;margin-top:5px;" viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.8"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+          <div>
+            <h3 style="font-size:40px;margin-bottom:10px;">Unsere erste Software</h3>
+            <p style="font-size:29px;color:var(--w-70);margin:0;">SoulByte. Ihr seid die Ersten damit.</p>
+          </div>
+        </div>
+      </div>
+      <!-- Collage: Bilder folgen (LinkedIn-Material), erst Freigabe durch Emre -->
+      <div class="collage" style="flex:1.4;">
+        <div class="ph gross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span class="label">Collage 1</span></div>
+        <div class="ph"><span class="label">Collage 2</span></div>
+        <div class="ph"><span class="label">Collage 3</span></div>
+        <div class="ph"><span class="label">Collage 4</span></div>
+        <div class="ph"><span class="label">Collage 5</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4: PROJEKTTEAM ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Diese Menschen bringen euch <span class="schimmer">SoulByte.</span></h2>
+    <div class="team-grid feld wachsen" style="align-content:center;">
+      <div class="team-karte fragment fade-up">
+        <div class="team-foto"><img src="assets/images/team/dom.png" alt="Dom"></div>
+        <div><div class="team-name">Dom</div><div class="team-firma edge">EDGE Digital</div></div>
+      </div>
+      <div class="team-karte fragment fade-up">
+        <div class="team-foto"><img src="assets/images/team/nadira.png" alt="Nadira"></div>
+        <div><div class="team-name">Nadira</div><div class="team-firma edge">EDGE Digital</div></div>
+      </div>
+      <div class="team-karte fragment fade-up">
+        <div class="team-foto"><img src="assets/images/team/emre.png" alt="Emre"></div>
+        <div><div class="team-name">Emre</div><div class="team-firma edge">EDGE Digital</div></div>
+      </div>
+      <div class="team-karte fragment fade-up">
+        <div class="team-foto"><img src="assets/images/team/edgar.png" alt="Edgar"></div>
+        <div><div class="team-name">Edgar</div><div class="team-firma edge">EDGE Digital</div></div>
+      </div>
+      <div class="team-karte fragment fade-up">
+        <div class="team-foto"><img src="assets/images/team/jonas.png" alt="Jonas"></div>
+        <div><div class="team-name">Jonas</div><div class="team-firma exrohr">Ex-Rohr</div></div>
+      </div>
+      <div class="team-karte fragment fade-up">
+        <div class="team-foto"><img src="assets/images/team/arndt.png" alt="Arndt"></div>
+        <div><div class="team-name">Arndt</div><div class="team-firma exrohr">Ex-Rohr</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5: AGENDA ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Unser <span class="schimmer">Fahrplan.</span></h2>
+    <div class="agenda feld wachsen" style="justify-content:center;padding:20px 52px;">
+      <div class="agenda-zeile fragment fade-up">
+        <span class="agenda-zeit">10:25</span>
+        <span class="agenda-num">01</span>
+        <span class="agenda-titel">Was ist KI?<small>Einmal verstehen, was da eigentlich passiert.</small></span>
+      </div>
+      <div class="agenda-zeile fragment fade-up">
+        <span class="agenda-zeit">10:35</span>
+        <span class="agenda-num">02</span>
+        <span class="agenda-titel">Wo geht die Reise hin?<small>Und warum Ex-Rohr vorne mitf&auml;hrt.</small></span>
+      </div>
+      <div class="agenda-zeile pause-zeile fragment fade-up">
+        <span class="agenda-zeit">10:45</span>
+        <span class="agenda-num" style="color:var(--w-25);">&middot;</span>
+        <span class="agenda-titel">Kurze Verschnaufpause</span>
+      </div>
+      <div class="agenda-zeile fragment fade-up">
+        <span class="agenda-zeit">10:50</span>
+        <span class="agenda-num">03</span>
+        <span class="agenda-titel">Was ist SoulByte?<small>Eure KI. Was sie kann und warum ihr ihr trauen k&ouml;nnt.</small></span>
+      </div>
+      <div class="agenda-zeile fragment fade-up">
+        <span class="agenda-zeit">10:55</span>
+        <span class="agenda-num">04</span>
+        <span class="agenda-titel">Ab ins Tool<small>Wir arbeiten gemeinsam live in SoulByte.</small></span>
+      </div>
+      <div class="agenda-zeile fragment fade-up">
+        <span class="agenda-zeit">11:30</span>
+        <span class="agenda-num">05</span>
+        <span class="agenda-titel">Das gro&szlig;e Quiz<small>Mit einem Gewinn, den ihr nicht erwartet.</small></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6: DIVIDER AP1 ============ -->
+<section data-chrome="aus">
+  <div class="slide mittig" style="position:relative;">
+    <div class="riesenzahl">01</div>
+    <h2 class="hero">Was ist <span class="schimmer">KI?</span></h2>
+    <p class="divider-zeit">10 Minuten &middot; Versprochen ohne Fachchinesisch</p>
+  </div>
+</section>
+
+<!-- ============ 7: KI EINFACH ERKLAERT ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">KI ist Autovervollst&auml;ndigung.<br>Auf <span class="schimmer">Steroiden.</span></h2>
+    <div class="wachsen" style="display:flex;align-items:center;margin-top:20px;">
+      <div class="spalten feld" style="grid-template-columns:repeat(3,1fr);">
+        <div class="fragment fade-up">
+          <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C15DE6" stroke-width="1.8"><path d="M2 6h20M2 12h14M2 18h9"/></svg></div>
+          <h3>Sie hat gelesen</h3>
+          <p>So ziemlich alles, was Menschen je aufgeschrieben haben. Auch &uuml;ber Rohre.</p>
+        </div>
+        <div class="fragment fade-up">
+          <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#009FF4" stroke-width="1.8"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <h3>Sie r&auml;t das n&auml;chste Wort</h3>
+          <p>Wie euer Handy beim Tippen. Nur ungef&auml;hr eine Million Mal besser.</p>
+        </div>
+        <div class="fragment fade-up">
+          <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.8"><path d="M12 2a7 7 0 0 1 4 12.7V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.3A7 7 0 0 1 12 2z"/><path d="M9 21h6"/></svg></div>
+          <h3>Das Ergebnis wirkt schlau</h3>
+          <p>Texte, Antworten, Ideen. In Sekunden. Und ja, das darf man unheimlich finden.</p>
+        </div>
+      </div>
+    </div>
+    <div class="takeaway fragment fade-up">
+      <p>Keine Magie. Kein denkender Roboter. Ein sehr belesenes Werkzeug.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8: DIE ROHR-ANALOGIE ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">KI ist die Rohrkamera f&uuml;r <span class="schimmer">Kopfarbeit.</span></h2>
+    <p class="lead">Ihr kennt das Prinzip l&auml;ngst. Ihr nennt es nur anders.</p>
+    <div class="zeilen feld wachsen" style="justify-content:center;margin-top:30px;">
+      <div class="fragment fade-up" style="display:grid;grid-template-columns:1fr 90px 1fr;align-items:center;gap:30px;padding:34px 6px;">
+        <p style="font-size:30px;color:var(--weiss);margin:0;">Die <strong class="cyan">Rohrkamera</strong> zeigt in Minuten, wo es klemmt.</p>
+        <svg style="width:46px;height:46px;color:var(--w-45);margin:0 auto;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <p style="font-size:30px;color:var(--w-70);margin:0;">KI zeigt in Sekunden, wo in einem 40-Seiten-Dokument die Antwort steht.</p>
+      </div>
+      <div class="fragment fade-up" style="display:grid;grid-template-columns:1fr 90px 1fr;align-items:center;gap:30px;padding:34px 6px;">
+        <p style="font-size:30px;color:var(--weiss);margin:0;">Der <strong class="cyan">Hochdrucksp&uuml;ler</strong> schafft, wof&uuml;r man fr&uuml;her aufgraben musste.</p>
+        <svg style="width:46px;height:46px;color:var(--w-45);margin:0 auto;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <p style="font-size:30px;color:var(--w-70);margin:0;">KI schreibt in zwei Minuten den Bericht, f&uuml;r den ihr sonst den Feierabend opfert.</p>
+      </div>
+      <div class="fragment fade-up" style="display:grid;grid-template-columns:1fr 90px 1fr;align-items:center;gap:30px;padding:34px 6px;">
+        <p style="font-size:30px;color:var(--weiss);margin:0;">Und trotzdem: Ohne <strong class="cyan">euch</strong> f&auml;hrt kein Sp&uuml;lwagen raus.</p>
+        <svg style="width:46px;height:46px;color:var(--w-45);margin:0 auto;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <p style="font-size:30px;color:var(--w-70);margin:0;">Ohne euch schickt KI keine einzige Mail ab. Ihr entscheidet. Immer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9: WAS BLEIBT BEI EUCH ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Die KI &uuml;bernimmt den Schreibkram.<br>Ihr beh&auml;ltet das <span class="schimmer">Handwerk.</span></h2>
+    <div class="spalten feld wachsen" style="grid-template-columns:1fr 1fr;align-content:center;margin-top:20px;padding:28px 52px;">
+      <div class="fragment fade-up">
+        <p class="label" style="color:var(--cyan);margin:0 0 10px;">Gebt ihr ab</p>
+        <div class="zeilen">
+          <div style="font-size:29px;">Angebote und Mails formulieren</div>
+          <div style="font-size:29px;">Berichte und Protokolle zusammenfassen</div>
+          <div style="font-size:29px;">Infos aus langen Dokumenten fischen</div>
+          <div style="font-size:29px;">Texte freundlich machen, wenn der Kunde nervt</div>
+        </div>
+      </div>
+      <div class="fragment fade-up">
+        <p class="label" style="color:var(--exrot);margin:0 0 10px;">Bleibt bei euch</p>
+        <div class="zeilen">
+          <div style="font-size:29px;">Jede Entscheidung und jede Freigabe</div>
+          <div style="font-size:29px;">Das Gespr&auml;ch mit dem Kunden vor Ort</div>
+          <div style="font-size:29px;">Euer Fachwissen aus 20 Jahren im Kanal</div>
+          <div style="font-size:29px;">Und das Sp&uuml;len selbst. Da hilft keine KI.</div>
+        </div>
+      </div>
+    </div>
+    <div class="takeaway fragment fade-up">
+      <p style="font-size:36px;">KI ersetzt niemanden von euch. Sie ersetzt die Stunden, die euch nerven.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10: DIVIDER AP2 ============ -->
+<section data-chrome="aus">
+  <div class="slide mittig" style="position:relative;">
+    <div class="riesenzahl">02</div>
+    <h2 class="hero">Wo geht die <span class="schimmer">Reise</span> hin?</h2>
+    <p class="divider-zeit">10 Minuten &middot; Spoiler: nach vorne</p>
+  </div>
+</section>
+
+<!-- ============ 11: TEMPO (MOORE VS. SCALING) ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">2010 hat die KI die <span class="schimmer">Spur gewechselt.</span></h2>
+    <p class="lead">Bis dahin wuchs sie im Takt normaler Technik. Seitdem verdoppelt sie sich viermal so oft.</p>
+
+    <div class="chart-wrap">
+      <svg viewBox="0 0 1660 540" style="width:100%;height:auto;overflow:visible;">
+        <defs>
+          <linearGradient id="ki-verlauf" x1="0" y1="540" x2="1660" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#C15DE6"/><stop offset=".5" stop-color="#009FF4"/><stop offset="1" stop-color="#00E2E2"/>
+          </linearGradient>
+          <linearGradient id="ki-flaeche" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="rgba(0,226,226,.16)"/><stop offset="1" stop-color="rgba(0,226,226,0)"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Gitter, eine Linie je Zehnerpotenz -->
+        <g>
+          <line class="gitterlinie" x1="230" y1="480" x2="1130" y2="480"/>
+          <line class="gitterlinie" x1="230" y1="405" x2="1130" y2="405"/>
+          <line class="gitterlinie" x1="230" y1="330" x2="1130" y2="330"/>
+          <line class="gitterlinie" x1="230" y1="255" x2="1130" y2="255"/>
+          <line class="gitterlinie" x1="230" y1="180" x2="1130" y2="180"/>
+          <line class="gitterlinie" x1="230" y1="105" x2="1130" y2="105"/>
+          <line class="gitterlinie" x1="230" y1="30"  x2="1130" y2="30"/>
+          <text class="achsentext" x="210" y="487" text-anchor="end">1&#215;</text>
+          <text class="achsentext" x="210" y="412" text-anchor="end">10&#215;</text>
+          <text class="achsentext" x="210" y="337" text-anchor="end">100&#215;</text>
+          <text class="achsentext" x="210" y="262" text-anchor="end">1.000&#215;</text>
+          <text class="achsentext" x="210" y="187" text-anchor="end">10.000&#215;</text>
+          <text class="achsentext" x="210" y="112" text-anchor="end">100.000&#215;</text>
+          <text class="achsentext" x="210" y="37"  text-anchor="end">1.000.000&#215;</text>
+          <text class="achsentext" x="230" y="522">2010</text>
+          <text class="achsentext" x="1130" y="522" text-anchor="end">10 Jahre sp&#228;ter</text>
+        </g>
+
+        <!-- KI: Verdopplung alle 6 Monate, nach 10 Jahren 2^20 -->
+        <g class="fragment fade-in" data-fragment-index="2">
+          <path d="M230 480 L1130 30 L1130 480 Z" fill="url(#ki-flaeche)"/>
+          <path class="kurve-ki" d="M230 480 L1130 30"/>
+          <circle cx="1130" cy="30" r="13" fill="#00E2E2"/>
+          <circle cx="1130" cy="30" r="26" fill="#00E2E2" opacity=".22"/>
+        </g>
+
+        <!-- Klassische IT: Verdopplung alle 24 Monate, nach 10 Jahren 2^5 -->
+        <g class="fragment fade-in" data-fragment-index="1">
+          <path class="kurve-moore" d="M230 480 L1130 367"/>
+          <circle cx="1130" cy="367" r="9" fill="rgba(244,246,255,.5)"/>
+          <text class="endwert-moore" x="1175" y="358">32&#215;</text>
+          <text class="achsentext" x="1175" y="392">Klassische IT</text>
+          <text class="achsentext" x="1175" y="418" style="fill:rgba(244,246,255,.22);">Verdopplung alle 24 Monate</text>
+        </g>
+        <g class="fragment fade-in" data-fragment-index="2">
+          <text class="endwert-ki" x="1175" y="36" fill="#00E2E2">1.048.576&#215;</text>
+          <text class="achsentext" x="1175" y="72" style="fill:rgba(0,226,226,.7);">K&#252;nstliche Intelligenz</text>
+          <text class="achsentext" x="1175" y="98" style="fill:rgba(244,246,255,.22);">Verdopplung alle 6 Monate</text>
+        </g>
+      </svg>
+    </div>
+
+    <p class="quelle">Epoch AI, Compute Trends Across Three Eras of Machine Learning</p>
+  </div>
+</section>
+
+<!-- ============ 12: ZAHLEN ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Das passiert gerade in <span class="schimmer">Deutschland.</span></h2>
+    <div class="wachsen" style="display:flex;align-items:center;">
+      <div class="spalten feld" style="grid-template-columns:repeat(3,1fr);">
+        <div class="metrik fragment fade-up">
+          <span class="zahl">81%</span>
+          <span class="was">der deutschen Unternehmen sehen KI als wichtigste Zukunftstechnologie</span>
+          <span class="quelle">Bitkom, 2026</span>
+        </div>
+        <div class="metrik fragment fade-up">
+          <span class="zahl">36%</span>
+          <span class="was">nutzen KI bereits aktiv. Fast doppelt so viele wie im Jahr davor</span>
+          <span class="quelle">Bitkom, 2026</span>
+        </div>
+        <div class="metrik fragment fade-up">
+          <span class="zahl">6</span>
+          <span class="was">Monate, dann ist die n&auml;chste Modellgeneration da. Das Tempo bleibt hoch</span>
+          <span class="quelle">Stanford AI Index</span>
+        </div>
+      </div>
+    </div>
+    <div class="takeaway fragment fade-up">
+      <p>Die Frage ist nicht mehr, ob KI kommt. Nur noch, wer sie zuerst gut nutzt.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 13: EX-ROHR MACHT MIT ============ -->
+<section>
+  <div class="slide mittig">
+    <h2 class="hero" style="font-size:120px;">Ex-Rohr wartet nicht.<br>Ex-Rohr <span class="schimmer">macht.</span></h2>
+    <p class="lead" style="font-size:38px;margin-top:20px;">W&auml;hrend andere in der Branche noch zuschauen, bekommt ihr heute eure eigene KI.<br>Nicht irgendein Tool. Eure eigene.</p>
+    <div class="takeaway fragment fade-up" style="margin-top:56px;max-width:1300px;">
+      <p>Ihr m&uuml;sst keine Angst vor KI haben. Ihr seid die, die mit ihr wachsen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 14: PAUSE ============ -->
+<section data-chrome="aus">
+  <div class="slide mittig">
+    <h2 class="hero"><span class="schimmer">Durchatmen.</span></h2>
+    <p class="lead" style="font-size:40px;">Getr&auml;nk holen, Beine vertreten, kurz raus.<br>In f&uuml;nf Minuten wird es praktisch.</p>
+  </div>
+</section>
+
+<!-- ============ 15: DIVIDER AP3 ============ -->
+<section data-chrome="aus">
+  <div class="slide mittig" style="position:relative;">
+    <div class="riesenzahl">03</div>
+    <h2 class="hero">Was ist <span class="schimmer">SoulByte?</span></h2>
+    <p class="divider-zeit">5 Minuten &middot; Alles Wichtige, kompakt</p>
+  </div>
+</section>
+
+<!-- ============ 16: SOULBYTE VORSTELLUNG ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">SoulByte kennt <span class="schimmer">Ex-Rohr.</span><br>Und beh&auml;lt es f&uuml;r sich.</h2>
+    <div class="wachsen" style="display:flex;align-items:center;margin-top:16px;">
+      <!-- TODO Emre: Formulierungen am Donnerstag gegen die echten SoulByte-Fakten pruefen -->
+      <div class="spalten feld" style="grid-template-columns:repeat(3,1fr);">
+        <div class="fragment fade-up">
+          <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C15DE6" stroke-width="1.8"><path d="M12 2a7 7 0 0 1 7 7c0 2.4-1.2 4.5-3 5.7V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.3C6.2 13.5 5 11.4 5 9a7 7 0 0 1 7-7z"/><path d="M9 21h6"/></svg></div>
+          <h3 style="font-size:34px;">Kennt euer Unternehmen</h3>
+          <p style="font-size:26px;">Eure Abl&auml;ufe, eure Leistungen, eure Sprache. Kein Standard-Chatbot mit Allgemeinpl&auml;tzen.</p>
+        </div>
+        <div class="fragment fade-up">
+          <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#009FF4" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+          <h3 style="font-size:34px;">Eure Daten bleiben eure</h3>
+          <p style="font-size:26px;">EU-Modell, EU-Server, DSGVO-konform. Pers&ouml;nliche Daten werden anonymisiert, bevor die KI sie &uuml;berhaupt sieht.</p>
+        </div>
+        <div class="fragment fade-up">
+          <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <h3 style="font-size:34px;">Gebaut f&uuml;r den Alltag</h3>
+          <p style="font-size:26px;">Angebote, Berichte, Mails, Recherche im Firmenwissen. Weniger Schreibarbeit, mehr Feierabend.</p>
+        </div>
+      </div>
+    </div>
+    <div class="takeaway fragment fade-up">
+      <p>Kurz: die St&auml;rke von ChatGPT. Ohne dessen Schw&auml;chen. Mit eurem Wissen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 17: VERGLEICHSTABELLE ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Warum nicht einfach <span class="schimmer">ChatGPT?</span></h2>
+    <!-- Vorlage: Kategorien und Werte werden bis Freitag gemeinsam mit Emre befuellt -->
+    <div class="feld wachsen" style="padding:8px 44px;">
+    <table class="vergleich" style="height:100%;">
+      <tr>
+        <th></th>
+        <th class="sb-spalte">SoulByte</th>
+        <th>ChatGPT</th>
+        <th>Claude</th>
+      </tr>
+      <tr class="fragment fade-up">
+        <td>Kennt das Wissen von Ex-Rohr</td>
+        <td class="sb-spalte"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+        <td><span class="kreuz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6 6 18M6 6l12 12"/></svg></span></td>
+        <td><span class="kreuz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6 6 18M6 6l12 12"/></svg></span></td>
+      </tr>
+      <tr class="fragment fade-up">
+        <td>Europ&auml;isches KI-Modell</td>
+        <td class="sb-spalte"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+        <td><span class="kreuz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6 6 18M6 6l12 12"/></svg></span></td>
+        <td><span class="kreuz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6 6 18M6 6l12 12"/></svg></span></td>
+      </tr>
+      <tr class="fragment fade-up">
+        <td>Pers&ouml;nliche Daten raus, bevor die KI liest</td>
+        <td class="sb-spalte"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+        <td><span class="kreuz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6 6 18M6 6l12 12"/></svg></span></td>
+        <td><span class="kreuz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6 6 18M6 6l12 12"/></svg></span></td>
+      </tr>
+      <tr class="fragment fade-up">
+        <td>Ansprechpartner, den ihr kennt</td>
+        <td class="sb-spalte"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+        <td><span class="kreuz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6 6 18M6 6l12 12"/></svg></span></td>
+        <td><span class="kreuz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6 6 18M6 6l12 12"/></svg></span></td>
+      </tr>
+      <tr class="fragment fade-up">
+        <td>Gemacht f&uuml;r eure Arbeitsabl&auml;ufe</td>
+        <td class="sb-spalte"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+        <td><span class="kreuz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6 6 18M6 6l12 12"/></svg></span></td>
+        <td><span class="kreuz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6 6 18M6 6l12 12"/></svg></span></td>
+      </tr>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 18: DIVIDER AP4 ============ -->
+<section data-chrome="aus">
+  <div class="slide mittig" style="position:relative;">
+    <div class="riesenzahl">04</div>
+    <h2 class="hero">Ab ins <span class="schimmer">Tool.</span></h2>
+    <p class="divider-zeit">35 Minuten &middot; Jetzt seid ihr dran</p>
+  </div>
+</section>
+
+<!-- ============ 19: PRAXIS-EINSTIEG ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Tool offen? Dann <span class="schimmer">los.</span></h2>
+    <p class="lead">Wir gehen jetzt alles gemeinsam durch. Ihr klickt mit, wir erkl&auml;ren, was wof&uuml;r ist.</p>
+    <div class="wachsen" style="display:flex;align-items:center;margin-top:20px;">
+      <div class="spalten feld" style="grid-template-columns:repeat(4,1fr);">
+        <div class="fragment fade-up" style="padding:0 40px 0 0;">
+          <div class="sp-num">1</div>
+          <h3 style="font-size:31px;">Die Oberfl&auml;che</h3>
+          <p style="font-size:24px;">Wo ist was und warum.</p>
+        </div>
+        <div class="fragment fade-up" style="padding:0 40px;">
+          <div class="sp-num">2</div>
+          <h3 style="font-size:31px;">Der erste Prompt</h3>
+          <p style="font-size:24px;">Fragen stellen, die gute Antworten bringen.</p>
+        </div>
+        <div class="fragment fade-up" style="padding:0 40px;">
+          <div class="sp-num">3</div>
+          <h3 style="font-size:31px;">Das Firmenwissen</h3>
+          <p style="font-size:24px;">SoulByte antwortet mit Ex-Rohr-Wissen.</p>
+        </div>
+        <div class="fragment fade-up" style="padding:0 0 0 40px;">
+          <div class="sp-num">4</div>
+          <h3 style="font-size:31px;">Eure F&auml;lle</h3>
+          <p style="font-size:24px;">Echte Aufgaben aus eurem Alltag, live gel&ouml;st.</p>
+        </div>
+      </div>
+    </div>
+    <p class="label mt-auto zentriert">Merkt euch, was euch &uuml;berrascht. Das Quiz kommt noch.</p>
+  </div>
+</section>
+
+<!-- ============ 20: SCREENSHOT-PLATZHALTER 1 ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">So sieht das <span class="schimmer">konkret</span> aus.</h2>
+    <div class="reihe wachsen" style="margin-top:20px;gap:70px;">
+      <div class="ph wachsen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
+        <span class="label">Screenshot aus SoulByte einsetzen</span>
+      </div>
+      <div class="zeilen feld" style="width:660px;flex-shrink:0;justify-content:center;">
+        <div class="fragment fade-up" style="display:flex;gap:26px;align-items:flex-start;padding:40px 6px;">
+          <svg style="width:44px;height:44px;flex-shrink:0;margin-top:4px;" viewBox="0 0 24 24" fill="none" stroke="#C15DE6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span style="font-size:31px;color:var(--w-70);line-height:1.5;">Fragen wie im Gespr&auml;ch. Einfach tippen, SoulByte versteht euch.</span>
+        </div>
+        <div class="fragment fade-up" style="display:flex;gap:26px;align-items:flex-start;padding:40px 6px;">
+          <svg style="width:44px;height:44px;flex-shrink:0;margin-top:4px;" viewBox="0 0 24 24" fill="none" stroke="#009FF4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <span style="font-size:31px;color:var(--w-70);line-height:1.5;">Die Antworten kommen aus dem Ex-Rohr-Wissen, nicht aus dem Internet-Nebel.</span>
+        </div>
+        <div class="fragment fade-up" style="display:flex;gap:26px;align-items:flex-start;padding:40px 6px;">
+          <svg style="width:44px;height:44px;flex-shrink:0;margin-top:4px;" viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+          <span style="font-size:31px;color:var(--w-70);line-height:1.5;">Alles bleibt im Haus. Ihr k&ouml;nnt einfach drauflos fragen.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 21: SCREENSHOT-PLATZHALTER 2 ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Und daf&uuml;r nutzt ihr es <span class="schimmer">morgen.</span></h2>
+    <div class="reihe wachsen" style="margin-top:20px;gap:70px;">
+      <div class="zeilen feld" style="width:660px;flex-shrink:0;justify-content:center;">
+        <div class="fragment fade-up" style="display:flex;gap:26px;align-items:flex-start;padding:40px 6px;">
+          <svg style="width:44px;height:44px;flex-shrink:0;margin-top:4px;" viewBox="0 0 24 24" fill="none" stroke="#C15DE6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8M16 17H8M10 9H8"/></svg>
+          <span style="font-size:31px;color:var(--w-70);line-height:1.5;">Das Angebot f&uuml;r die Kanalsanierung steht, bevor der Kaffee durchgelaufen ist.</span>
+        </div>
+        <div class="fragment fade-up" style="display:flex;gap:26px;align-items:flex-start;padding:40px 6px;">
+          <svg style="width:44px;height:44px;flex-shrink:0;margin-top:4px;" viewBox="0 0 24 24" fill="none" stroke="#009FF4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          <span style="font-size:31px;color:var(--w-70);line-height:1.5;">Die Antwort auf die dritte Nachfrage-Mail bleibt freundlich. Auch freitags um halb f&uuml;nf.</span>
+        </div>
+        <div class="fragment fade-up" style="display:flex;gap:26px;align-items:flex-start;padding:40px 6px;">
+          <svg style="width:44px;height:44px;flex-shrink:0;margin-top:4px;" viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <span style="font-size:31px;color:var(--w-70);line-height:1.5;">Das eine Detail aus dem 80-Seiten-Handbuch ist in Sekunden gefunden.</span>
+        </div>
+      </div>
+      <div class="ph wachsen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
+        <span class="label">Screenshot aus SoulByte einsetzen</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 22: DIVIDER AP5 KAHOOT ============ -->
+<section data-chrome="aus">
+  <div class="slide mittig" style="position:relative;">
+    <div class="riesenzahl">05</div>
+    <h2 class="hero">Das gro&szlig;e <span class="schimmer">Quiz.</span></h2>
+    <p class="divider-zeit">15 Minuten &middot; Es gibt wirklich etwas zu gewinnen</p>
+  </div>
+</section>
+
+<!-- ============ 23: KAHOOT ============ -->
+<section>
+  <div class="slide mittig">
+    <h2 class="headline zentriert">Wie gut kennt ihr <span class="schimmer">SoulByte</span> schon?</h2>
+    <div class="reihe" style="align-items:center;gap:90px;margin-top:56px;">
+      <div class="ph" style="width:320px;height:320px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM18 18h3v3h-3z"/></svg>
+        <span class="label">Kahoot-QR einsetzen</span>
+      </div>
+      <div class="spalte" style="gap:26px;align-items:flex-start;text-align:left;">
+        <p class="link-gross"><span class="schimmer">kahoot</span>.it</p>
+        <p class="lead" style="font-size:34px;">PIN kommt gleich auf den Bildschirm.<br>Alle Fragen drehen sich um das, was ihr eben live gesehen habt.</p>
+        <!-- TODO: Gewinn festlegen (gemeinsam mit Emre) -->
+        <p style="font-size:32px;font-weight:600;margin:12px 0 0;">Der Gewinn? Wird nicht verraten. Nur so viel: <span class="cyan">Er ist es wert.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 24: FRAGEN & FEEDBACK ============ -->
+<section>
+  <div class="slide mittig">
+    <h2 class="hero" style="font-size:130px;">Was habt ihr auf dem <span class="schimmer">Herzen?</span></h2>
+    <p class="lead" style="font-size:38px;margin-top:16px;">Fragen, W&uuml;nsche, erste Eindr&uuml;cke. Alles ist erlaubt.<br>Und alles hilft uns, SoulByte f&uuml;r euch besser zu machen.</p>
+  </div>
+</section>
+
+<!-- ============ 25: ABSCHLUSS ============ -->
+<section data-chrome="aus">
+  <div class="slide mittig">
+    <img src="assets/logos/edge-logo-white.png" alt="EDGE Digital" style="height:120px;margin-bottom:60px;">
+    <h2 class="hero" style="font-size:150px;">Ab heute:<br><span class="schimmer">einfach machen.</span></h2>
+    <p class="lead" style="font-size:38px;margin-top:24px;">SoulByte ist eingerichtet, ihr wisst, wie es geht.<br>Bei Fragen sind Jonas und Arndt eure erste Anlaufstelle. Und wir sind nie weit weg.</p>
+    <p class="label" style="margin-top:70px;">EDGE Digital &middot; K&uuml;nstliche Intelligenz. Echte Wirkung.</p>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script type="module">
+import Reveal from './assets/revealjs/reveal.esm.js';
+window.Reveal = Reveal;
+
+Reveal.initialize({
+  /* ?nofrag zeigt alle Fragmente sofort: fuer visuelle Pruefung und PDF */
+  fragments: !new URLSearchParams(location.search).has('nofrag'),
+  hash: true,
+  history: true,
+  transition: 'fade',
+  transitionSpeed: 'default',
+  backgroundTransition: 'none',
+  controls: true,
+  controlsLayout: 'bottom-right',
+  controlsTutorial: false,
+  progress: true,
+  slideNumber: false,
+  center: false,
+  width: 1920,
+  height: 1080,
+  margin: 0
+});
+
+/* Slide-Zaehler und Chrome-Steuerung: Titel- und Divider-Slides
+   (data-chrome="aus") laufen ohne Logos und Zaehler. */
+const numEl = document.getElementById('chrome-num');
+function chromeUpdate() {
+  const slides = Reveal.getSlides();
+  const idx = Reveal.getState().indexh;
+  const aktuelle = Reveal.getCurrentSlide();
+  const aus = aktuelle.dataset.chrome === 'aus';
+  document.body.classList.toggle('chrome-aus', aus);
+  numEl.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+}
+Reveal.on('ready', chromeUpdate);
+Reveal.on('slidechanged', chromeUpdate);
+
+/* Sternschnuppen wie im EdgeVision-Wizard: alle 6,5 Sekunden eine,
+   direkt nach der Nebel-Ebene eingehaengt, also hinter den Folien */
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const nebel = document.querySelector('.nebel');
+  setInterval(() => {
+    if (document.hidden) return;
+    const s = document.createElement('div');
+    s.className = 'schnuppe';
+    s.style.top = (8 + Math.random() * 55) + 'vh';
+    s.style.left = (5 + Math.random() * 55) + 'vw';
+    s.style.setProperty('--wk', (18 + Math.random() * 24) + 'deg');
+    nebel.after(s);
+    setTimeout(() => s.remove(), 1300);
+  }, 6500);
+}
+
+</script>
+<!-- Die echte Wizard-Galaxie: three.js-Spiralarme, Sternschichten, Milchstrassenband,
+     langsame Rotation plus traege Maus-Parallaxe. 2D-Sternenfeld als Rueckfall.
+     Zuletzt geladen: die Folien stehen, bevor three.js ueberhaupt kommt. -->
+<script src="kosmos.js"></script>
+</body>
+</html>
