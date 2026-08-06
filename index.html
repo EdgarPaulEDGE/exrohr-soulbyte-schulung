@@ -305,6 +305,11 @@ body.chrome-aus .chrome { opacity: 0; }
 }
 .endwert-ki { font-size: 74px; font-weight: 700; letter-spacing: -.02em; }
 .endwert-moore { font-size: 46px; font-weight: 700; fill: rgba(244, 246, 255, .5); font-family: var(--font); }
+/* Emres Vorgabe: keine Endwerte mehr am Kurvenende, stattdessen traegt der
+   Takt der Verdopplung die Aussage und steht gross. Zwei Zeilen, weil der
+   volle Satz sonst nicht neben die Kurve passt. */
+.takt-ki { font-size: 52px; font-weight: 700; letter-spacing: -.01em; font-family: var(--font); }
+.takt-moore { font-size: 40px; font-weight: 700; fill: rgba(244, 246, 255, .5); font-family: var(--font); }
 .quelle { font-size: 19px; color: var(--w-25); letter-spacing: .04em; }
 
 /* ---------- Echte SoulByte-Screenshots als Fenster-Kachel ---------- */
@@ -664,8 +669,8 @@ body.chrome-aus .chrome { opacity: 0; }
           <text class="achsentext" x="210" y="187" text-anchor="end">10.000&#215;</text>
           <text class="achsentext" x="210" y="112" text-anchor="end">100.000&#215;</text>
           <text class="achsentext" x="210" y="37"  text-anchor="end">1.000.000&#215;</text>
-          <text class="achsentext" x="230" y="522">2010</text>
-          <text class="achsentext" x="1130" y="522" text-anchor="end">10 Jahre sp&#228;ter</text>
+          <text class="achsentext" x="230" y="522">0</text>
+          <text class="achsentext" x="1130" y="522" text-anchor="end">+10</text>
         </g>
 
         <!-- KI: Verdopplung alle 6 Monate, nach 10 Jahren 2^20 -->
@@ -680,14 +685,14 @@ body.chrome-aus .chrome { opacity: 0; }
         <g class="fragment fade-in" data-fragment-index="1">
           <path class="kurve-moore" d="M230 480 L1130 367"/>
           <circle cx="1130" cy="367" r="9" fill="rgba(244,246,255,.5)"/>
-          <text class="endwert-moore" x="1175" y="358">32&#215;</text>
-          <text class="achsentext" x="1175" y="392">Leistung von Chips</text>
-          <text class="achsentext" x="1175" y="418" style="fill:rgba(244,246,255,.22);">Verdopplung alle 24 Monate</text>
+          <text class="takt-moore" x="1175" y="352">Verdopplung</text>
+          <text class="takt-moore" x="1175" y="396">alle 24 Monate</text>
+          <text class="achsentext" x="1175" y="428">Leistung von Chips</text>
         </g>
         <g class="fragment fade-in" data-fragment-index="2">
-          <text class="endwert-ki" x="1175" y="36" fill="#00E2E2">1.048.576&#215;</text>
-          <text class="achsentext" x="1175" y="72" style="fill:rgba(0,226,226,.7);">Die Leistung von KI</text>
-          <text class="achsentext" x="1175" y="98" style="fill:rgba(244,246,255,.22);">Verdopplung alle 6 Monate</text>
+          <text class="takt-ki" x="1175" y="48" fill="#00E2E2">Verdopplung</text>
+          <text class="takt-ki" x="1175" y="104" fill="#00E2E2">alle 6 Monate</text>
+          <text class="achsentext" x="1175" y="140" style="fill:rgba(0,226,226,.7);">Die Leistung von KI</text>
         </g>
       </svg>
     </div>
