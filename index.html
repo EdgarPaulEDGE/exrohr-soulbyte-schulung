@@ -213,7 +213,16 @@ body.chrome-aus .chrome { opacity: 0; }
 /* ---------- Team ---------- */
 /* Zwei Lager, klar getrennt: eine beschriftete Linie ueber jeder Gruppe.
    Dadurch braucht kein Name mehr sein Firmenkuerzel darunter. */
-.team-lager { display: flex; justify-content: center; gap: 84px; width: 100%; margin-top: 20px; }
+/* Ab acht Personen passt keine gemeinsame Zeile mehr in die Folie.
+   Dann stehen die Lager untereinander: EDGE oben, Ex-Rohr darunter.
+   Die Karten schrumpfen dabei, damit beide Reihen unter die zweizeilige
+   Headline passen, ohne dass die Folie unten abgeschnitten wird. */
+.team-lager { display: flex; flex-direction: column; gap: 34px; width: 100%; margin-top: 8px; }
+.team-lager > div { display: flex; flex-direction: column; align-items: center; }
+.team-lager .lager-kopf { width: 100%; margin-bottom: 24px; }
+.team-lager .team-karte { width: 178px; gap: 16px; }
+.team-lager .team-foto { width: 178px; height: 178px; }
+.team-lager .team-name { font-size: 29px; }
 .lager-kopf { display: flex; align-items: center; gap: 22px; margin-bottom: 46px; }
 .lager-name { font-weight: 700; font-size: 22px; letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; }
 .lager-name.edge { color: var(--cyan); }
@@ -450,6 +459,14 @@ body.chrome-aus .chrome { opacity: 0; }
           <div class="team-foto"><img src="assets/images/team/edgar.png" alt="Edgar"></div>
           <div class="team-name">Edgar</div>
         </div>
+        <div class="team-karte fragment fade-up">
+          <div class="team-foto"><img src="assets/images/team/sohal.png" alt="Sohal"></div>
+          <div class="team-name">Sohal</div>
+        </div>
+        <div class="team-karte fragment fade-up">
+          <div class="team-foto"><img src="assets/images/team/vici.png" alt="Vici"></div>
+          <div class="team-name">Vici</div>
+        </div>
           </div>
         </div>
         <div>
@@ -524,7 +541,7 @@ body.chrome-aus .chrome { opacity: 0; }
 <!-- ============ 7: KI EINFACH ERKLAERT ============ -->
 <section>
   <div class="slide">
-    <h2 class="headline">KI ist pers&ouml;nliche Assistenz.<br>Auf <span class="schimmer">Steroiden.</span></h2>
+    <h2 class="headline">KI ist pers&ouml;nliche Assistenz.<br>Auf <span class="schimmer">Koks.</span></h2>
     <div class="wachsen" style="display:flex;align-items:center;margin-top:20px;">
       <div class="spalten feld" style="grid-template-columns:repeat(3,1fr);">
         <div class="fragment fade-up">
