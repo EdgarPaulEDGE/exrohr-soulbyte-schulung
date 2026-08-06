@@ -13,6 +13,14 @@ Live-Eindruck im Browser. PDF-Export existiert nur als Notnagel.
 GitHub Pages aus `main`, Repo `EdgarPaulEDGE/exrohr-soulbyte-schulung`, oeffentlich.
 Jeder Push auf `main` geht automatisch live (etwa eine Minute).
 
+**Zweite Adresse: https://exrohr-soulbyte-schulung.onrender.com**
+Render Static Site (Workspace EDGE Digital, `srv-d9qd23ugekts7390o810`),
+auto-deploy aus `main`. Am 06.08.2026 als Ausweichweg angelegt, weil GitHub
+Pages stundenlang gestoert war; Render klont nur per Git und umgeht damit
+die Actions/Pages-Schicht. Achtung: Render kodiert PNGs beim Ausliefern
+leicht um (kleinere Dateien, minimal andere Pixel an Freisteller-Kanten),
+Hash-Vergleiche gegen lokale Dateien schlagen dort deshalb fehl.
+
 ## Starten
 
 ```bash
